@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import SpojiSeNaStanje from "./components/SpojiSeNaStanje";
+import FunkcionalnaSconnectom from "./components/FunkcionalnaSconnectom";
+import UnosimStore from "./components/UnosimStore";
 import {
   dodajSlovo,
   oduzmiSlovo,
@@ -10,18 +13,8 @@ import {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.podaci = [];
+    this.state = { krumpir: "mladi" };
   }
-
-  fetchaj = async () => {
-    this.podaci = await fetch("https://api.tvmaze.com/search/shows?q=star")
-      .then((response) => response.json())
-      .then((data) => {
-        //console.log(data);
-        return data;
-      });
-    this.props.osvjeziFilmove(this.podaci);
-  };
 
   render() {
     return (
@@ -32,7 +25,18 @@ class App extends Component {
         <button onClick={this.props.resetiraj}>resetiraj riječ</button>{" "}
         <button onClick={this.props.dodajSlovo}>dodaj slovo</button> <br />
         <hr />
-        <button onClick={this.fetchaj}>Osviježi filmove</button>
+        <SpojiSeNaStanje />
+        <hr />
+        <FunkcionalnaSconnectom />
+        <hr />
+        Krumir je {this.state.krumpir}{" "}
+        <button onClick={() => this.setState({ krumpir: "stari" })}>
+          Promijeni Krumpir
+        </button>
+        <hr />
+        <UnosimStore />
+        <hr />
+        <button onClick={this.props.osvjeziFilmove}>Osviježi filmove</button>
         <ul>
           {this.props.filmovi.map((element) => {
             return (

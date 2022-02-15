@@ -16,6 +16,24 @@ export const resetiraj = () => {
   return { type: RESETIRAJ };
 };
 
-export const osvjeziFilmove = (dohvaceniFilmovi) => {
-  return { type: OSVJEZI_FILMOVE, payload: dohvaceniFilmovi };
+export const osvjeziFilmove = () => async (dispatch) => {
+  let dohvaceniFilmovi = await fetch(
+    "https://api.tvmaze.com/search/shows?q=star"
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    });
+  dispatch({ type: OSVJEZI_FILMOVE, payload: dohvaceniFilmovi });
 };
+
+/*
+export const novaAkcijska = () => async (dispatch) => {
+  //piši što hoćeš, asinkrono
+  //
+  //
+
+  //I na kraju dispatchom pokreni promjenu stanja
+  dispatch({ type: OSVJEZI_FILMOVE, payload: dohvaceniFilmovi });
+};
+*/
